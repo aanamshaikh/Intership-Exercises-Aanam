@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-
-import static java.util.Arrays.*;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 public class ParityFilterTest {
@@ -33,17 +30,21 @@ public class ParityFilterTest {
     private static Predicate<Integer> getMultipleOf(int num) {
         return integer -> integer % num == 0;
     }
+
     public static Predicate<Integer> oddPrime() {
         return getOdd().and(isPrime());
     }
+
     public static Predicate<Integer> getGreaterThan(int num) {
         return integer -> integer > num;
     }
+
     public static Predicate<Integer> getLessThan(int num) {
         return integer -> integer < num;
     }
+    // test Cases
     @Test
-    public void testForListFilterWithAllCommands() {
+    public void testForParityFilterWithAllCommands() {
         List<Integer> numbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
         List<Integer> expectedOutputAll1 = new ArrayList<>(Arrays.asList(9, 15 ));
         List<Integer> testAny1 = ParityFilter.withAllCommands(numbersList,Arrays.asList(getOdd(),getGreaterThan(5),getMultipleOf(3)));
@@ -55,7 +56,7 @@ public class ParityFilterTest {
     }
 
     @Test
-    public void testForListFilterWithAnyCommand() {
+    public void testForParityFilterWithAnyCommand() {
         //input and expected results
         List<Integer> numbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
         List<Integer> expectedAny1 = new ArrayList<>(Arrays.asList( 2, 3, 5, 7, 10, 11, 13, 15, 16, 17, 18, 19, 20 ));
