@@ -2,6 +2,7 @@ package exercise_1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class NumberRange {
 
@@ -32,10 +33,15 @@ public class NumberRange {
     }
     public static List<String> range(int start,int end) {
         ArrayList<String> result = new ArrayList<>();
-        for(int i = start; i<=end;i++){
-            result.add(evenOrOddOrPrime(i));
-     }
+        IntStream
+                .range((int) start, (int) end + 1)
+                .forEach(num -> getParity(num));
         return result;
+    }
+    // whether even or odd or prime
+
+    private static String getParity(int num) {
+        return evenOrOddOrPrime(num);
     }
 
     public static void main(String[] args) {
@@ -46,5 +52,6 @@ public class NumberRange {
         int end = sc.nextInt();
 
         System.out.println(range( start,  end));
+//        System.out.println(range().forEach(System.out::println));
      }
 }
