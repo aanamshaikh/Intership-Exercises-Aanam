@@ -40,7 +40,7 @@ public class ParityFilterTest {
     }
 
     public static Predicate<Integer> getLessThan(int num) {
-        return integer -> integer < num;
+        return getGreaterThan(num).negate();
     }
     // test Cases
     @Test
