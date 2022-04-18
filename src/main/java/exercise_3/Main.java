@@ -44,9 +44,9 @@ public class Main  {
             }
         }
         if(input.equalsIgnoreCase(type2)){
-            List<String> inp = extractedFromInput();
             out.println("Enter the search String:");
             String searchStr = sc.nextLine();
+            List<String> inp = extractedFromInput();
             List<String> result = searchProcessing(searchStr, inp);
             for(String r : result){
                 out.print(r+" ");
