@@ -19,6 +19,7 @@ public class Grep {
         searchRecursively("test", Paths.get("src/main/resources/"));
         List<String> a =Arrays.asList("literature a great subject");
         writeToFile(a, new File("src/main/resources/OutputFile.txt"));
+
     }
 
     public static List<String> searchStringInFile(String searchString, Path file) {

@@ -27,6 +27,11 @@ class MainTest {
         Grep.searchRecursively("test", Paths.get("src/main/resources/"));
     }
     @Test
+    public void writeToFile() throws IOException {
+        List<String> list = Arrays.asList("Literature is a great subject");
+        Grep.writeToFile(list, new File("src/main/resources/OutputFile.txt"));
+    }
+    @Test
     public void testFromStdin() {
 
      List<String> inp =Arrays.asList("literature","lite","light","litter");
