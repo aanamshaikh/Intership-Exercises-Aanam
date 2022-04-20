@@ -1,52 +1,27 @@
 package exercise_3;
 
-
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.lang.System.in;
-import static java.lang.System.out;
-
 public class Grep {
 
-    public static void main(String[] args) throws IOException {
-
-        searchRecursively("test", Paths.get("src/main/resources/"));
-        List<String> a = Arrays.asList("literature a great subject");
-        writeToFile(a, new File("src/main/resources/OutputFile.txt"));
-    }
-
-    public static List<String> searchStringInFile(String searchString, Path file) {
-
-        try (Stream<String> lines = Files.lines(file)) {
-            return lines.filter(s -> s
-                            .contains(searchString))
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static void searchRecursively(String searchString, Path folder) {
+    public LinkedHashMap<String, List<String>> searchRecursively(String searchString, Path folder) {
+        LinkedHashMap<String, List<String>> map = new LinkedHashMap<>();
         try (Stream<Path> paths = Files.walk(folder)) {
-            paths.forEach(f ->
+            paths.forEach(path ->
             {
-                if (Files.isRegularFile(f)) {
+                if (Files.isRegularFile(path)) {
                     try {
-                        if (Files.isReadable(f)) {
-                            List<String> s = searchStringInFile(searchString, f);
-                            for (String line : s) {
-                                System.out.println(f + " : " + line);
-                            }
+
+                        List<String> s = searchStringInFile(searchString, path);
+                        if (!s.isEmpty()) {
+                            map.put(String.valueOf(path), s);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -56,29 +31,50 @@ public class Grep {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return map;
     }
 
-    public static List<String> extractedFromInput() {
-        List<String> scList;
-        try (Scanner sc = new Scanner(in)) {
-            out.print("Enter the inputs: ");
-            scList = Arrays.asList(sc.nextLine().split(" "));
-        }
-        return scList;
+    public List<String> searchStringInFile(String searchString, Path file) {
+        return searchProcessing(searchString, readFromFile(file));
+
     }
 
-    public static List<String> searchProcessing(String searchString, List<String> result) {
+    public List<String> searchProcessing(String searchString, List<String> result) {
         return result.stream()
                 .filter(line -> line.contains(searchString))
                 .collect(Collectors.toList());
     }
 
-    public static List<String> writeToFile(List<String> list, File fileName) throws IOException {
-
-//        Files.write(Paths.get("src/main/java/exercise_3/OutputFile.txt"), list);
-        if (fileName.canWrite() && fileName.isFile()) {
-            Files.write(Paths.get(String.valueOf(fileName)), list);
+    public List<String> readFromFile(Path path) {
+        File file = new File(String.valueOf(path));
+        if (file.exists() && file.canRead()) {
+            try {
+                return Files.readAllLines(file.toPath());
+            } catch (IOException e) {
+                System.err.print("Err :" + e.getMessage());
+            }
         }
-        return list;
+        return Collections.emptyList();
     }
+
+    public void writeToFile(Path fileName, List<String> list) throws IOException {
+        Files.write(fileName, list, StandardCharsets.UTF_8);
+//        Files.write(Paths.get(String.valueOf(fileName)), list);
+    }
+
+//    public static List<String> extractedFromInput() {
+//        List<String> scList;
+//        try (Scanner sc = new Scanner(in)) {
+//            out.print("Enter the inputs: ");
+//            scList = Arrays.asList(sc.nextLine().split(" "));
+//        }
+//        return scList;
+//    }
+
+//    for(Map.Entry<String, List<String>> entries :map.entrySet()){
+//        String key = entries.getKey();
+//        List<String> value = entries.getValue();
+//        System.out.print(key+":");
+//        value.forEach(System.out::println);
+//    }
 }
