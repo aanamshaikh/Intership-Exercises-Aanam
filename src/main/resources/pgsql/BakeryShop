@@ -1,0 +1,51 @@
+A small bakery owner with 3 stores would like to implement a Point-of-Sales (POS) system to track sales & inventory
+of the business. Every day, there are a limited number of cakes being produced for each store. Design a relational
+ database design to help the bakery owner implement the POS. List down the required tables and columns along with
+ their data types.
+
+You may assume that cakes have some types (ex. Chocolate, Pineapple, Truffle etc) and sizes (0.5kg, 1kg, 2kg etc)
+
+Based on your relational design, the store owner should be able to answer questions like following.
+You have to write SQL statements for answering these questions.
+1. Find the total revenue from all stores for a given month.
+2. Find revenue per month per branch ordered by branch with maximum revenue at the top.
+3. Find the best selling cake per branch in a given month. Best selling is calculated based on number of units sold.
+
+PRODUCT:
+product_id int(150)
+product_name varchar(30),
+product_type varchar(30),
+product_size int(10),
+product_price int(10),
+product_quantity int(10),
+product_Food labelling varchar(30),
+product manufacture date int(20),
+product_shelf time int(30)
+
+Branch:
+id int(150),
+name varchar(30),
+location varchar(100)
+
+Order:
+order id int(150),
+customer id int(150),
+purchase date int(20)
+
+order_details
+id int(150),
+order id int(150),
+customer id int(150),
+product id int(150),
+product quantity int(10),
+product size int(150),
+total bill int(100)
+
+CUSTOMER:
+customer_id int(150),
+customer_fname varchar(30),
+customer_lname varchar(30),
+customer_address varchar(100),
+customer_Phoneno int(10),
+
+
